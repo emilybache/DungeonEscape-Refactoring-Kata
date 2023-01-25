@@ -76,7 +76,7 @@ void hiding_loop() {
     while (file_exists("location.txt") && counter < 5) {
         scenario = "The screams are quieter.";
         printf("%s\n", scenario);
-        sleep(5);
+        sleep(2);
         counter++;
     }
 }
