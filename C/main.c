@@ -73,10 +73,10 @@ void search() {
 void hiding_loop() {
     int counter = 0;
     char *scenario;
-    while (file_exists("location.txt") && counter < 5) {
+    while (file_exists("location.txt") && counter < 1) {
         scenario = "The screams are quieter.";
         printf("%s\n", scenario);
-        sleep(2);
+        sleep(1);
         counter++;
     }
 }
