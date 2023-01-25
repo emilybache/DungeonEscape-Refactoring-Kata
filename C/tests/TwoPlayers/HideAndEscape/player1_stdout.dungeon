@@ -23,8 +23,17 @@ You are standing in an empty guard room that looks to have been hastily abandone
 	 (s)earch the guardroom
 
 hide
-You are hiding in the guardroom. Press h to stop hiding.
+You are hiding in the guardroom.
 The screams are quieter.
-You realize the room is not empty any more. A guard appears and captures you. Soon you find yourself back in your cell, feeling miserable that your escape attempt failed.
-Play again? y/n
+You are hiding in the guardroom.. Would you like to:
+	 go back (o)ut of the guardroom
+	 Continue (h)iding
+
+hide
+You are hiding in the guardroom.
+The screams are quieter.
+You are hiding in the guardroom.. Would you like to:
+	 go back (o)ut of the guardroom
+	 Continue (h)iding
+
 Quit

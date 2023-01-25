@@ -5,8 +5,12 @@
 #include <stdbool.h>    // bool type
 #include <unistd.h>
 
+bool HAVE_BEEN_HIDING = false;
+
 void cell_choices();
+
 void right_corridor();
+
 void guardroom();
 
 bool file_exists(char *filename) {
@@ -21,24 +25,18 @@ void write_location(char *location) {
 }
 
 void delete_location() {
-    remove ("location.txt");
+    remove("location.txt");
 }
 
 void play_again() {
     printf("Play again? y/n\n");
     int command;
     while ((command = getchar()) != EOF) {
+        if (strchr("yn", command) != NULL) {
+            break;
+        }
         switch (command) {
             case 10:
-                break;
-            case 'y':
-                printf("play again\n");
-                cell_choices();
-                break;
-            case 'n':
-                printf("quit\n");
-                printf("Thankyou for playing");
-                exit(0);
                 break;
 
             case 'q':
@@ -52,7 +50,17 @@ void play_again() {
                 break;
         }
     }
-
+    switch (command) {
+        case 'y':
+            printf("play again\n");
+            cell_choices();
+            break;
+        case 'n':
+            printf("quit\n");
+            printf("Thankyou for playing");
+            exit(0);
+            break;
+    }
 }
 
 void search() {
@@ -71,6 +79,7 @@ void search() {
 }
 
 void hiding_loop() {
+    HAVE_BEEN_HIDING = true;
     int counter = 0;
     char *scenario;
     while (file_exists("location.txt") && counter < 1) {
@@ -83,7 +92,7 @@ void hiding_loop() {
 
 void hide() {
 
-    char *scenario = "You are hiding in the guardroom. Press h to stop hiding.";
+    char *scenario = "You are hiding in the guardroom.";
     printf("%s\n", scenario);
     write_location("guardroom");
     int command;
@@ -93,17 +102,11 @@ void hide() {
         char *choices = "\n\t go back (o)ut of the guardroom\n\t Continue (h)iding\n\n";
         printf("%s. Would you like to:%s", scenario, choices);
         while ((command = getchar()) != EOF) {
+            if (strchr("oh", command) != NULL) {
+                break;
+            }
             switch (command) {
                 case 10:
-                    break;
-                case 'o':
-                    printf("out of the guardroom\n");
-                    delete_location();
-                    right_corridor();
-                    break;
-                case 'h':
-                    printf("hide\n");
-                    hide();
                     break;
 
                 case 'q':
@@ -117,6 +120,19 @@ void hide() {
                     break;
             }
         }
+        switch (command) {
+            case 'o':
+                printf("out of the guardroom\n");
+                if (HAVE_BEEN_HIDING) {
+                    delete_location();
+                }
+                right_corridor();
+                break;
+            case 'h':
+                printf("hide\n");
+                hide();
+                break;
+        }
     } else {
         scenario = "You realize the room is not empty any more. A guard appears and captures you. Soon you find yourself back in your cell, feeling miserable that your escape attempt failed.\n";
         printf("%s", scenario);
@@ -126,20 +142,17 @@ void hide() {
 }
 
 
-
 void guardroom() {
     char *scenario = "You are standing in an empty guard room that looks to have been hastily abandoned. There is no-one here but the screams grow louder. Suddenly the light from the torch outside goes out.\n";
     char *choices = "\n\t go back (o)ut of the guardroom\n\t (h)ide in the guardroom\n\t (s)earch the guardroom\n\n";
     printf("%s. Would you like to:%s", scenario, choices);
     int command;
     while ((command = getchar()) != EOF) {
+        if (strchr("o", command) != NULL) {
+            break;
+        }
         switch (command) {
             case 10:
-                break;
-            case 'o':
-                printf("out of the guardroom\n");
-                delete_location();
-                right_corridor();
                 break;
             case 'h':
                 printf("hide\n");
@@ -150,7 +163,6 @@ void guardroom() {
                 search();
                 break;
             case 'q':
-                delete_location();
                 printf("Quit\n");
                 exit(0);
                 break;
@@ -160,6 +172,16 @@ void guardroom() {
                        command, command, isgraph(command) ? command : '.');
                 break;
         }
+    }
+    switch (command) {
+        case 'o':
+            printf("out of the guardroom\n");
+            if (HAVE_BEEN_HIDING) {
+                delete_location();
+            }
+            right_corridor();
+            break;
+
     }
 }
 
@@ -174,20 +196,11 @@ void left_corridor() {
     printf("%s. Would you like to:%s", scenario, choices);
     int command;
     while ((command = getchar()) != EOF) {
+        if (strchr("ubt", command) != NULL) {
+            break;
+        }
         switch (command) {
             case 10:
-                break;
-            case 'u':
-                printf("up the stairs\n");
-                upstairs();
-                break;
-            case 'b':
-                printf("go back\n");
-                right_corridor();
-                break;
-            case 't':
-                printf("go through the door\n");
-                guardroom();
                 break;
 
             case 'q':
@@ -201,7 +214,20 @@ void left_corridor() {
                 break;
         }
     }
-
+    switch (command) {
+        case 'u':
+            printf("up the stairs\n");
+            upstairs();
+            break;
+        case 'b':
+            printf("go back\n");
+            right_corridor();
+            break;
+        case 't':
+            printf("go through the door\n");
+            guardroom();
+            break;
+    }
 }
 
 
@@ -212,17 +238,11 @@ void right_corridor() {
     printf("%s. Would you like to:%s", scenario, choices);
     int command;
     while ((command = getchar()) != EOF) {
+        if (strchr("rf", command) != NULL) {
+            break;
+        }
         switch (command) {
             case 10:
-                break;
-            case 'r':
-                printf("run\n");
-                left_corridor();
-                break;
-            case 'f':
-                printf("fight\n");
-                printf("Unfortunately you lose the fight and fall to the floor dead.\n");
-                play_again();
                 break;
 
             case 'q':
@@ -235,6 +255,17 @@ void right_corridor() {
                        command, command, isgraph(command) ? command : '.');
                 break;
         }
+    }
+    switch (command) {
+        case 'r':
+            printf("run\n");
+            left_corridor();
+            break;
+        case 'f':
+            printf("fight\n");
+            printf("Unfortunately you lose the fight and fall to the floor dead.\n");
+            play_again();
+            break;
     }
 }
 
@@ -244,28 +275,31 @@ void door_choices() {
     int command;
 
     while ((command = getchar()) != EOF) {
+        if (strchr("lr", command) != NULL) {
+            break;
+        }
         switch (command) {
             case 10:
                 break;
-            case 'l':
-                printf("go left\n");
-                left_corridor();
-                break;
-            case 'r':
-                printf("go right\n");
-                right_corridor();
-                break;
-
             case 'q':
                 printf("Quit\n");
                 exit(0);
                 break;
-
             default:
                 printf("Unexpected input %d (0x%.2X) ('%c')\n",
                        command, command, isgraph(command) ? command : '.');
                 break;
         }
+    }
+    switch (command) {
+        case 'l':
+            printf("go left\n");
+            left_corridor();
+            break;
+        case 'r':
+            printf("go right\n");
+            right_corridor();
+            break;
     }
 
 }
@@ -273,33 +307,35 @@ void door_choices() {
 void cell_choices() {
     char *choices = "You are standing in a cell in the dungeon. The recent earthquake has broken the door. Would you like to \n\t (s)tay in the cell\n\t go through the (d)oor\n\n";
     printf("%s", choices);
-    int command;
 
+    int command;
     while ((command = getchar()) != EOF) {
+        if (strchr("sd", command) != NULL) {
+            break;
+        }
         switch (command) {
             case 10:
                 break;
-            case 's':
-                printf("stay in the cell\n");
-                cell_choices();
-                break;
-            case 'd':
-                printf("go through the door\n");
-                door_choices();
-                break;
-
             case 'q':
                 printf("Quit\n");
                 exit(0);
                 break;
-
             default:
                 printf("Unexpected input %d (0x%.2X) ('%c')\n",
                        command, command, isgraph(command) ? command : '.');
                 break;
         }
     }
-
+    switch (command) {
+        case 's':
+            printf("stay in the cell\n");
+            cell_choices();
+            break;
+        case 'd':
+            printf("go through the door\n");
+            door_choices();
+            break;
+    }
 }
 
 int main() {
