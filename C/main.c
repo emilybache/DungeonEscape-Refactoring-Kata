@@ -4,7 +4,14 @@
 #include <sys/stat.h>   // stat
 #include <stdbool.h>    // bool type
 #include <string.h>     // strchr
-#include <windows.h>
+#ifdef _WIN32
+#include <windows.h>    // Sleep
+#else
+#include <unistd.h>
+#define Sleep(x) sleep((x) / 1000)
+#endif
+
+bool HAVE_BEEN_HIDING = false;
 
 bool HAVE_BEEN_HIDING = false;
 

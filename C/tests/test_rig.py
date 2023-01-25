@@ -1,7 +1,7 @@
 import sys, os, pathlib, subprocess
 
 C_FOLDER = pathlib.Path(os.environ.get("TEXTTEST_ROOT", os.getcwd())).parent
-DUNGEON_GAME = C_FOLDER / "cmake-build-debug" / "DungeonEscape.exe"
+DUNGEON_GAME = C_FOLDER / "cmake-build-debug" / "DungeonEscape"
 def main(args):
     if not DUNGEON_GAME.exists():
         print(f"could not find executable: {DUNGEON_GAME}")
