@@ -3,7 +3,8 @@
 #include <ctype.h>
 #include <sys/stat.h>   // stat
 #include <stdbool.h>    // bool type
-#include <unistd.h>
+#include <string.h>     // strchr
+#include <windows.h>
 
 bool HAVE_BEEN_HIDING = false;
 
@@ -82,10 +83,10 @@ void hiding_loop() {
     HAVE_BEEN_HIDING = true;
     int counter = 0;
     char *scenario;
-    while (file_exists("location.txt") && counter < 1) {
+    while (file_exists("location.txt") && counter < 2) {
         scenario = "The screams are quieter.";
         printf("%s\n", scenario);
-        sleep(1);
+        Sleep(500);
         counter++;
     }
 }
