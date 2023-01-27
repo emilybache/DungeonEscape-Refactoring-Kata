@@ -1,7 +1,4 @@
 # Full path to the System Under Test (or Java Main Class name)
-#executable:${TEXTTEST_ROOT}/../cmake-build-debug/DungeonEscape.exe
-
-# uncomment this to enable the test rig instead of using the executable directly
 executable:${TEXTTEST_ROOT}/test_rig.py
 
 # Naming scheme to use for files for stdin,stdout and stderr
@@ -10,6 +7,7 @@ filename_convention_scheme:standard
 # Expanded name to use for application
 full_name:Dungeon Escape
 
-# uncomment these when you want to have more than one player
+home_operating_system:nt
+
 copy_test_path:player1_stdin.txt
 copy_test_path:player2_stdin.txt
