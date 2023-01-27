@@ -13,8 +13,6 @@
 
 bool HAVE_BEEN_HIDING = false;
 
-bool HAVE_BEEN_HIDING = false;
-
 void cell_choices();
 
 void right_corridor();
