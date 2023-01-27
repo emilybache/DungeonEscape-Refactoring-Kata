@@ -7,7 +7,7 @@ filename_convention_scheme:standard
 # Expanded name to use for application
 full_name:Dungeon Escape
 
-home_operating_system:nt
+home_operating_system:posix
 
 copy_test_path:player1_stdin.txt
 copy_test_path:player2_stdin.txt
